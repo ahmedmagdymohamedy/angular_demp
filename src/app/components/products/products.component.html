@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">quantity</th>
+            <th scope="col">price</th>
+            <th scope="col">more</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of productList ; index as i;">
+            <th scope="row">{{i}}</th>
+            <td>{{product.name}}</td>
+            <td>{{product.quantity}}</td>
+            <td>{{product.price}}</td>
+            <td><button (click)="goToDetails(product.id)" class="btn btn-info text-light">more</button></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,8 @@
+<p>data-componant</p>
+
+<input type="text" [(ngModel)]="inputValue" />
+
+<div *ngIf="isTrue" class="text-success">hello from the true Div </div>
+<div *ngIf="!isTrue" class="text-danger">hello from the false Div </div>
+
+<button (click)="onClickMe()">Click Me</button>
