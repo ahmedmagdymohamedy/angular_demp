@@ -1,3 +1,4 @@
+import { NotesComponent } from './components/notes/notes.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: "users", component: UsersComponent },
   { path: "posts", component: PostsComponent },
   { path: "post/:id", component: PostsDetailsComponent },
+  { path: "notes", component: NotesComponent },
   { path: "**", component: PageNotFoundComponent },
 ];
 

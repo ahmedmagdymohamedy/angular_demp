@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { User } from 'src/app/my-types/user';
 import { HtttpService } from 'src/app/services/htttp.service';
 
@@ -9,24 +9,50 @@ import { HtttpService } from 'src/app/services/htttp.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  socialMedia: string[] = ["facebook", "twitter", "google"];
-  userData: User;
 
-  constructor(private http: HtttpService) {
-    this.userData = new User('', '', '', '', '');
+  socialMedia: string[] = ["facebook", "twitter", "google"];
+  formGroup: FormGroup;
+
+
+
+  constructor(private http: HtttpService, private fb: FormBuilder) {
+    this.formGroup = this.fb.group({
+      userName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      fromWhereHeCome: ['', Validators.required],
+    })
+
+  }
+
+  get userName(): FormArray {
+    return this.formGroup.get('userName') as FormArray;
+  }
+  get email(): FormArray {
+    return this.formGroup.get('email') as FormArray;
+  }
+  get password(): FormArray {
+    return this.formGroup.get('password') as FormArray;
+  }
+  get confirmPassword(): FormArray {
+    return this.formGroup.get('confirmPassword') as FormArray;
+  }
+  get fromWhereHeCome(): FormArray {
+    return this.formGroup.get('fromWhereHeCome') as FormArray;
+  }
+
+  confirmPasswordIsMatch(): boolean {
+    return this.password.value !== this.confirmPassword.value
   }
 
   ngOnInit(): void {
 
   }
 
-  onSubmit(formData: NgForm) {
-    // console.log(formData);
-    // console.log(this.userData);
-    this.http.postUser(this.userData).subscribe(data => {
-      console.log(data);
-
-    });
-
+  onSubmit() {
+    console.log(this.formGroup.value);
   }
+
+
 }

@@ -1,0 +1,55 @@
+<form [formGroup]="noteFormGroup" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="name" class="form-label">name</label>
+        <input formControlName="name" type="name" class="form-control" id="name" aria-describedby="nameHelp">
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+            <div class="text-danger" *ngIf="name.errors?.['required']">
+                name is required.
+            </div>
+            <div class="text-danger" *ngIf="name.errors?.['forbiddenName']">
+                name can't be admin.
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="product" class="form-label">Product</label>
+        <input formControlName="product" type="product" class="form-control" id="product ">
+
+        <div *ngIf="product.invalid && (product.dirty || product.touched)" class="alert">
+            <div class="text-danger" *ngIf="product.errors?.['required']">
+                product is required.
+            </div>
+        </div>
+
+    </div>
+
+    <div class=" mb-3">
+        <input class="mx-2" formControlName="hasDiscount" type="checkbox" id="hasDiscount"
+            (change)="onChangeHasDiscount()">
+        <label for="hasDiscount" class="form-label">has discount</label>
+
+
+    </div>
+
+    <div class="mb-3">
+        <label for="discountInPercent" class="form-label">discount (In Percent)</label>
+        <input formControlName="discountInPercent" type="number" class="form-control" id="discountInPercent">
+        <!-- <div class="text-danger" *ngIf="discountInPercent.errors?.['required']"> -->
+        <div class="text-danger" *ngIf="discountInPercent.invalid">
+            discount In Percent is required.
+        </div>
+    </div>
+
+    <div formArrayName="comments">
+        <h3>Comments</h3>
+        <button class="btn btn-light" (click)="addComment()">Add Comment</button>
+        <div *ngFor="let comment of comments.controls; let i = index" class="mb-3">
+            <label for="comment-{{i}}" class="form-label">comment-{{i}}</label>
+            <input id="comment-{{i}}" type="text" [formControlName]="i" class="form-control">
+        </div>
+    </div>
+
+    <button [disabled]="!noteFormGroup.valid" type="submit" class="btn btn-primary">Submit</button>
+</form>

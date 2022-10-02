@@ -1,23 +1,22 @@
-<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" action="">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="mb-3">
         <label for="userName" class="form-label">User Name</label>
-        <input pattern="[a-z]{1,}[A-Z]{1,}?" required [(ngModel)]="userData.userName" name="userName" ngModel
-            type="name" class="form-control" id="userName" aria-describedby="nameHelp" #username="ngModel">
+        <input formControlName="userName" type="name" class="form-control" id="userName" aria-describedby="nameHelp">
 
-        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert">
-            <div class="text-danger" *ngIf="username.errors?.['required']">
-                username is required.
+        <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert">
+            <div class="text-danger" *ngIf="userName.errors?.['required']">
+                userName is required.
             </div>
-            <div class="text-danger" *ngIf="username.errors?.['pattern']">
-                username is not on right pattern.
+            <div class="text-danger" *ngIf="userName.errors?.['pattern']">
+                userName is not on right pattern.
             </div>
         </div>
     </div>
 
     <div class="mb-3">
         <label for="emailInput" class="form-label">Email address</label>
-        <input pattern="^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$" required [(ngModel)]="userData.email" name="email" ngModel
-            type="email" class="form-control" id="email required " aria-describedby="emailHelp" #email="ngModel">
+        <input formControlName="email" pattern="^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$" type="email" class="form-control"
+            id="emailInput" aria-describedby="emailHelp">
 
         <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
             <div class="text-danger" *ngIf="email.errors?.['required']">
@@ -30,8 +29,7 @@
     </div>
     <div class=" mb-3">
         <label for="password" class="form-label">Password</label>
-        <input required [(ngModel)]="userData.password" name="password" ngModel type="password" class="form-control"
-            id="password" #password="ngModel">
+        <input formControlName="password" type="password" class="form-control" id="password">
 
         <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
             <div class="text-danger" *ngIf="password.errors?.['required']">
@@ -41,26 +39,29 @@
     </div>
     <div class="mb-3">
         <label for="confirmPassword" class="form-label">Confirm Password</label>
-        <input required [(ngModel)]="userData.confirmPassword" name="confirmPassword" ngModel type="password"
-            class="form-control" id="confirmPassword" #confirmpassword="ngModel">
+        <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
 
-        <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)" class="alert">
-            <div class="text-danger" *ngIf="confirmpassword.errors?.['required']">
-                confirmpassword is required.
+        <div *ngIf=" (confirmPassword.dirty || confirmPassword.touched)" class="alert">
+            <div class="text-danger" *ngIf="confirmPassword.invalid && confirmPassword.errors?.['required']">
+                confirmPassword is required.
+            </div>
+            <div class="text-danger" *ngIf="!confirmPassword.errors?.['required'] && confirmPasswordIsMatch()">
+                confirmPassword is not match.
             </div>
         </div>
     </div>
     <label for="where-you-hear-us" class="form-label">where you hear about us </label>
-    <select required [(ngModel)]="userData.whereHearAboutUs" name="where-you-hear-us" ngModel id="where-you-hear-us"
-        class="form-select mb-3" aria-label="Default select example" #whereyouhear="ngModel">
+    <select formControlName="email" id="where-you-hear-us" class="form-select mb-3" aria-label="Default select example">
         <option selected>where you hear about us </option>
         <option *ngFor="let item of socialMedia" [value]="item">{{item}}</option>
     </select>
 
-    <div *ngIf="whereyouhear.invalid && (whereyouhear.dirty || whereyouhear.touched)" class="alert">
-        <div class="text-danger" *ngIf="whereyouhear.errors?.['required']">
-            whereyouhear is required.
+    <div *ngIf="fromWhereHeCome.invalid && (fromWhereHeCome.dirty || fromWhereHeCome.touched)" class="alert">
+        <div class="text-danger" *ngIf="fromWhereHeCome.errors?.['required']">
+            fromWhereHeCome is required.
         </div>
     </div>
-    <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary">Submit</button>
+
+    <p>Form Status: {{ formGroup.status }}</p>
+    <button [disabled]="!formGroup.valid" type="submit" class="btn btn-primary">Submit</button>
 </form>
